@@ -1,0 +1,136 @@
+@font-face { font-family: Caveat; font-weight: 600; font-display: swap; src: url(../fonts/caveat-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: Caveat; font-weight: 700; font-display: swap; src: url(../fonts/caveat-latin-700-normal.woff2) format("woff2"); }
+@font-face { font-family: Nunito; font-weight: 400; font-display: swap; src: url(../fonts/nunito-latin-400-normal.woff2) format("woff2"); }
+@font-face { font-family: Nunito; font-weight: 600; font-display: swap; src: url(../fonts/nunito-latin-600-normal.woff2) format("woff2"); }
+@font-face { font-family: Nunito; font-weight: 700; font-display: swap; src: url(../fonts/nunito-latin-700-normal.woff2) format("woff2"); }
+/* Idee: Preisschild. Kraftpapier, Honig, Kakao. Handschrift für Name und Preise, runde Sans für den Rest. Keine Verläufe, keine Schatten. */
+:root {
+  --bg: #EFE4D0; --paper: #FBF6EA; --field: #F3EAD7; --kraft: #CFA97C; --kraft-ink: #3A2A20;
+  --ink: #3A2A20; --muted: #7A6556; --line: #CDB898;
+  --honey: #E2A33A; --honey-ink: #2E1F14; --price: #8A4B14; --ok: #587437; --warn: #A8321F;
+  --hand: Caveat, "Bradley Hand", "Segoe Print", cursive;
+  --body: Nunito, ui-rounded, "SF Pro Rounded", -apple-system, "Helvetica Neue", system-ui, sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1E1611; --paper: #2A2019; --field: #352A21; --kraft: #6B4E36; --kraft-ink: #F6E9D4;
+    --ink: #F3E6D2; --muted: #B49C84; --line: #46362A;
+    --honey: #EDB454; --honey-ink: #2A1B0F; --price: #F0C27A; --ok: #9DBB6E; --warn: #FF9D8A;
+  }
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { -webkit-text-size-adjust: 100%; }
+[hidden] { display: none !important; }
+body { margin: 0; background-color: var(--bg); color: var(--ink); font: 17px/1.4 var(--body); min-height: 100vh; padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6.5rem); }
+:focus-visible { outline: 3px solid var(--honey); outline-offset: 2px; }
+
+.head { padding: calc(env(safe-area-inset-top, 0px) + 26px) max(22px, env(safe-area-inset-right, 0px)) 0 max(22px, env(safe-area-inset-left, 0px)); }
+.head-in { max-width: 640px; margin: 0 auto; }
+.logo { margin: 0; font: 700 3.6rem/.95 var(--hand); letter-spacing: -.01em; }
+.sub { margin: 8px 0 0; color: var(--muted); font-size: .95rem; }
+body.loaded .logo { font-size: 2.4rem; }
+body.loaded .sub { display: none; }
+
+.wrap { max-width: 672px; margin: 0 auto; display: grid; gap: 16px; padding: 18px max(22px, env(safe-area-inset-right, 0px)) 0 max(22px, env(safe-area-inset-left, 0px)); }
+.wrap > * { min-width: 0; }
+
+/* Das Schild */
+.pick { position: relative; display: block; margin: 30px 6px 0; background: var(--kraft); color: var(--kraft-ink); text-align: center; padding: 66px 24px 34px;
+  transform: rotate(-1.6deg); clip-path: polygon(18% 0, 82% 0, 100% 10%, 100% 100%, 0 100%, 0 10%); cursor: pointer; }
+.pick::before { content: ""; position: absolute; left: 50%; top: 22px; width: 22px; height: 22px; margin-left: -11px; border-radius: 50%; background: var(--bg); box-shadow: inset 0 0 0 3px rgba(0,0,0,.13); }
+.pick .t { display: block; font: 700 2.8rem/1 var(--hand); }
+.pick .d { display: block; margin-top: 12px; font-size: .95rem; line-height: 1.5; }
+.pick .go { display: inline-block; margin-top: 22px; background: var(--honey); color: var(--honey-ink); font-weight: 700; padding: 14px 28px; border-radius: 999px; }
+.pick:active { opacity: .9; }
+body.loaded .pick { margin: 6px 0 0; padding: 14px 18px; transform: none; clip-path: none; border-radius: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; text-align: left; }
+body.loaded .pick::before, body.loaded .pick .d { display: none; }
+body.loaded .pick .t { font-size: 1.7rem; }
+body.loaded .pick .go { margin: 0; padding: 10px 20px; }
+
+.btn { appearance: none; border: 2px solid var(--line); border-radius: 999px; min-height: 54px; padding: 0 22px; font: 700 1rem var(--body); display: inline-flex; align-items: center; justify-content: center; cursor: pointer; background: var(--paper); color: var(--ink); white-space: nowrap; }
+.btn.primary { background: var(--honey); border-color: var(--honey); color: var(--honey-ink); }
+.btn:active { opacity: .85; }
+.btn:disabled { opacity: .5; }
+.linkbtn { appearance: none; border: 0; background: none; color: var(--muted); font: 600 1rem var(--body); padding: 10px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.status { margin: 0; font-size: .95rem; color: var(--muted); text-align: center; }
+.status:empty { display: none; }
+.status.ok { color: var(--ok); } .status.warn { color: var(--warn); }
+
+/* Zusammenfassung: Richtungs-Etikett, Zahlen in Handschrift */
+.summary { display: grid; gap: 8px; }
+.badge { justify-self: start; background: var(--honey); color: var(--honey-ink); font: 700 .88rem var(--body); padding: 7px 16px 7px 24px; clip-path: polygon(12px 0, 100% 0, 100% 100%, 12px 100%, 0 50%); }
+.summary .who { color: var(--muted); font-size: .95rem; }
+.stats { display: flex; gap: 22px; align-items: baseline; flex-wrap: wrap; }
+.stat { display: inline-flex; align-items: baseline; gap: 6px; }
+.stat b { font: 700 2.1rem/1 var(--hand); font-variant-numeric: tabular-nums; }
+.stat i { font-style: normal; color: var(--muted); font-size: .92rem; }
+.bad { flex-basis: 100%; color: var(--warn); font-size: .9rem; }
+.check { margin: 0; font-size: .92rem; color: var(--muted); }
+.check.ok { color: var(--ok); font-weight: 700; } .check.warn { color: var(--warn); font-weight: 700; }
+
+.group { background: var(--paper); border-radius: 16px; padding: 2px 18px; }
+.opt { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 12px 0; min-height: 54px; }
+.opt + .opt { border-top: 2px dashed var(--line); }
+.opt label { flex: 1; cursor: pointer; }
+.opt select { font: inherit; font-size: 1rem; color: var(--ink); background: var(--field); border: 0; border-radius: 10px; padding: .5rem .6rem; max-width: 55%; }
+.switch { appearance: none; -webkit-appearance: none; flex: none; width: 51px; height: 31px; border-radius: 999px; background: var(--line); position: relative; margin: 0; transition: background .18s; cursor: pointer; }
+.switch::after { content: ""; position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 50%; background: #fff; transition: transform .18s; }
+.switch:checked { background: var(--honey); }
+.switch:checked::after { transform: translateX(20px); }
+.opthint { margin: 6px 0 0; padding: 0 4px; font-size: .85rem; color: var(--muted); }
+
+/* Artikel: ein Papierblock, Perforation dazwischen */
+.items { background: var(--paper); border-radius: 16px; padding: 2px 18px; }
+.items:empty { display: none; }
+.item { display: grid; gap: 8px; padding: 14px 0; }
+.item + .item { border-top: 2px dashed var(--line); }
+.item .top { display: flex; gap: 6px; align-items: center; }
+.item input { width: 100%; min-width: 0; font: inherit; font-size: 16px; color: var(--ink); background: var(--field); border: 0; border-radius: 10px; padding: .6rem .75rem; }
+.item input.name { font-weight: 700; font-size: 1.02rem; background: transparent; padding-left: 0; }
+.item .x { flex: none; width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: var(--muted); font-size: 1.5rem; line-height: 1; cursor: pointer; }
+.item .x:active { background: var(--field); color: var(--warn); }
+.item .cols { display: grid; grid-template-columns: 1fr 1fr 6.4rem; gap: 8px; }
+.item .cols label { display: grid; gap: 3px; font-size: .78rem; color: var(--muted); }
+.item input.price { text-align: right; font: 700 1.55rem/1 var(--hand); color: var(--price); padding: .3rem .75rem; }
+.item input[aria-invalid="true"] { outline: 2px solid var(--warn); }
+.empty { text-align: center; color: var(--muted); padding: 22px 0; }
+
+details.fold { background: var(--paper); border-radius: 16px; padding: 2px 18px; }
+details.fold summary { cursor: pointer; font-weight: 700; min-height: 52px; display: flex; align-items: center; list-style: none; }
+details.fold summary::-webkit-details-marker { display: none; }
+details.fold summary::after { content: "›"; margin-left: auto; color: var(--muted); font-size: 1.4rem; transition: transform .15s; }
+details.fold[open] summary::after { transform: rotate(90deg); }
+details.fold .inner { display: grid; gap: 10px; padding-bottom: 14px; }
+textarea { width: 100%; font: 400 .85rem/1.45 ui-monospace, "SF Mono", Menlo, monospace; font-size: 16px; color: var(--ink); background: var(--field); border: 0; border-radius: 10px; padding: 10px; resize: vertical; }
+#out { white-space: pre; overflow: auto; font-size: .8rem; min-height: 8rem; }
+.note { margin: 0; font-size: .85rem; color: var(--muted); }
+
+.bar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 5; background: var(--bg); border-top: 2px dashed var(--line);
+  padding: 12px max(22px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(22px, env(safe-area-inset-left, 0px)); }
+.bar .in { max-width: 628px; margin: 0 auto; display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+.bar .btn.primary { padding: 0 12px; }
+.bar .total { grid-column: 1 / -1; text-align: center; font-size: .88rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+/* Papier-Schicht: Fasern per SVG-Rauschen, gerissene Kanten, Klebeband, Heftstich */
+:root { --grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 .35  0 0 0 0 .24  0 0 0 0 .12  0 0 0 .16 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  --fiber: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='f'><feTurbulence type='fractalNoise' baseFrequency='.012 .6' numOctaves='2' seed='4'/><feColorMatrix values='0 0 0 0 .3  0 0 0 0 .2  0 0 0 0 .1  0 0 0 .22 0'/></filter><rect width='100%' height='100%' filter='url(%23f)'/></svg>");
+  --tape: rgba(226,163,58,.85); }
+body { background-image: var(--grain); background-blend-mode: multiply; }
+.pick { background-image: var(--fiber), var(--grain); background-blend-mode: multiply; }
+body.loaded .pick { background-image: var(--fiber); }
+.items { position: relative; margin-top: 12px; padding: 26px 20px 30px; border-radius: 2px; transform: rotate(.4deg); background-image: var(--grain); background-blend-mode: multiply;
+  clip-path: polygon(0 0,100% 0,100% 97%,96% 98.4%,92% 97%,88% 98.4%,84% 97%,80% 98.4%,76% 97%,72% 98.4%,68% 97%,64% 98.4%,60% 97%,56% 98.4%,52% 97%,48% 98.4%,44% 97%,40% 98.4%,36% 97%,32% 98.4%,28% 97%,24% 98.4%,20% 97%,16% 98.4%,12% 97%,8% 98.4%,4% 97%,0 98.4%); }
+.items::before { content: ""; position: absolute; left: 50%; top: -4px; width: 96px; height: 26px; margin-left: -48px; background: var(--tape); transform: rotate(-3deg);
+  clip-path: polygon(0 8%,4% 0,8% 10%,12% 0,100% 0,96% 50%,100% 100%,12% 100%,8% 90%,4% 100%,0 92%,3% 50%); }
+.item:first-child { padding-top: 6px; }
+.btn { border-radius: 10px; }
+.btn.primary { border: 2px dashed rgba(46,31,20,.5); outline: 4px solid var(--honey); outline-offset: -4px; }
+.btn:not(.primary) { border-style: dashed; }
+.bar { position: fixed; border-top: 0; background-image: var(--grain); background-blend-mode: multiply; }
+.bar::before { content: ""; position: absolute; left: 0; right: 0; top: -5px; height: 6px; background: var(--bg);
+  clip-path: polygon(0 100%,0 40%,3% 0,6% 40%,9% 0,12% 40%,15% 0,18% 40%,21% 0,24% 40%,27% 0,30% 40%,33% 0,36% 40%,39% 0,42% 40%,45% 0,48% 40%,51% 0,54% 40%,57% 0,60% 40%,63% 0,66% 40%,69% 0,72% 40%,75% 0,78% 40%,81% 0,84% 40%,87% 0,90% 40%,93% 0,96% 40%,100% 0,100% 100%); }
+html, body { overflow-x: clip; } .items { margin-left: 4px; margin-right: 4px; }

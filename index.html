@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BasarWechsel</title>
+<meta name="description" content="Basarlino- und UnserBasar-Listen ineinander umwandeln.">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="BasarWechsel">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="format-detection" content="telephone=no">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#EFE4D0" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1E1611" media="(prefers-color-scheme: dark)">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="icon" type="image/svg+xml" href="icons/icon.svg">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="head">
+  <div class="head-in">
+    <h1 class="logo">BasarWechsel</h1>
+    <p class="sub">Basarlino und UnserBasar, in beide Richtungen.</p>
+  </div>
+</header>
+<div class="wrap">
+
+  <label class="pick" id="pick" for="file">
+    <span class="t">PDF auswählen</span>
+    <span class="d">Die Richtung erkenne ich selbst.<br>Verkaufte Artikel lasse ich weg. Alles bleibt auf dem Gerät.</span>
+    <span class="go">Datei wählen</span>
+  </label>
+  <input class="sr" type="file" id="file" accept="application/pdf,.pdf">
+  <p class="status" id="status" role="status" aria-live="polite"></p>
+
+  <section class="summary" id="summary" hidden>
+    <span class="badge" id="badge"></span>
+    <div class="who" id="who"></div>
+    <div class="stats" id="count"></div>
+    <p class="check" id="check"></p>
+  </section>
+
+  <section id="optsBox" hidden>
+    <div class="group" id="opts">
+      <div class="opt" id="oColor"><label for="optColor">Farbe aus dem Namen ziehen</label><input class="switch" type="checkbox" id="optColor" checked></div>
+      <div class="opt" id="oGender"><label for="optGender">Spalte m/w mitnehmen</label><input class="switch" type="checkbox" id="optGender"></div>
+      <div class="opt" id="oBracket"><label for="optBracket">Größe und Farbe in den Namen</label><input class="switch" type="checkbox" id="optBracket"></div>
+      <div class="opt"><label for="sep">Trennzeichen</label>
+        <select id="sep"><option value=";">Semikolon</option><option value=",">Komma</option><option value="&#9;">Tabulator</option></select>
+      </div>
+    </div>
+    <p class="opthint" id="optHint"></p>
+  </section>
+
+  <div class="items" id="items" aria-label="Artikelliste"></div>
+
+  <details class="fold" id="outBox" hidden>
+    <summary>CSV ansehen</summary>
+    <div class="inner">
+      <textarea id="out" rows="8" readonly aria-label="CSV-Vorschau"></textarea>
+      <p class="note" id="note"></p>
+    </div>
+  </details>
+
+  <details class="fold" id="pasteBox">
+    <summary>Basarlino-Text einfügen statt PDF</summary>
+    <div class="inner">
+      <textarea id="paste" rows="5" placeholder="Text aus der PDF hier einfügen. Pro Zeile ein Artikel, zum Beispiel: 001 Lj9i7 Jeans Zara (176, w.) 7,00 €"></textarea>
+      <button class="btn" type="button" id="pasteGo">Liste lesen</button>
+    </div>
+  </details>
+
+  <div style="text-align:center"><button class="linkbtn" type="button" id="demo">Beispiel ansehen</button></div>
+</div>
+
+<div class="bar" id="bar" hidden>
+  <div class="in">
+    <button class="btn primary" type="button" id="save">Für UnserBasar sichern</button>
+    <button class="btn" type="button" id="copy">Kopieren</button>
+    <div class="total" id="total"></div>
+  </div>
+</div>
+<script src="js/polyfill.js"></script>
+<script src="vendor/pdf.min.js"></script>
+<script src="js/parser.js"></script>
+<script src="js/app.js"></script>
+<script>
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+}
+</script>
+</body>
+</html>
