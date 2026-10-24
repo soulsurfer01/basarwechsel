@@ -95,7 +95,8 @@
     $('oColor').hidden = ub; $('oGender').hidden = ub; $('oBracket').hidden = !ub;
     $('optHint').textContent = ub ? '' : 'Beim Umschalten der Farbe wird die Liste neu gelesen. Eigene Änderungen gehen dabei verloren.';
     $('badge').textContent = S.demo ? 'Beispiel' : (ub ? 'UnserBasar → Basarlino' : 'Basarlino → UnserBasar');
-    $('who').textContent = S.demo ? 'Beispiel-Basar' : ([S.basar, S.seller].filter(Boolean).join(' · ') || 'Artikelliste');
+    $('closeDemo').hidden = !S.demo; $('demo').parentNode.hidden = S.demo;
+    $('who').textContent = S.demo ? 'Beispiel, nicht deine Liste' : ([S.basar, S.seller].filter(Boolean).join(' · ') || 'Artikelliste');
     $('note').textContent = ub ? NOTE_UB : NOTE_BAS;
     $('save').textContent = 'Für ' + target() + ' sichern';
     var ck = $('check'), sold = S.items.filter(function (i) { return i.sold; }).length;
@@ -155,6 +156,10 @@
     var t = $('paste').value;
     if (!t.trim()) { status('Das Textfeld ist leer.', 'warn'); return; }
     readText(t, '');
+  });
+  $('closeDemo').addEventListener('click', function () {
+    S.items = []; S.total = null; S.basar = ''; S.seller = ''; S.demo = false; S.raw = ''; S.expect = null; S.checkSum = 0;
+    $('file').value = ''; status(''); render(); window.scrollTo(0, 0);
   });
   $('demo').addEventListener('click', function () { load(SAMPLE, true); status(''); window.scrollTo(0, 0); });
   $('optColor').addEventListener('change', function () { if (S.raw) { load(S.raw, S.demo); status(''); } });
