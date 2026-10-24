@@ -201,7 +201,13 @@
         S.center = { label: best ? best + ' (dein Standort)' : 'Dein Standort', lat: p.coords.latitude, lng: p.coords.longitude };
         $('fOrt').value = best || ''; run();
       });
-    }, function () { $('fInfo').textContent = 'Der Standort wurde nicht freigegeben. Gib eine Postleitzahl oder einen Ort ein.'; }, { timeout: 10000, maximumAge: 600000 });
+    }, function (err) {
+      var c = err && err.code, t;
+      if (c === 1) t = 'Der Standort ist für diese App gesperrt. Am iPhone: Einstellungen, Datenschutz & Sicherheit, Ortungsdienste einschalten, dann bei Safari-Websites "Beim Verwenden der App" wählen. Oder gib die Postleitzahl ein.';
+      else if (c === 3) t = 'Der Standort braucht zu lange. Versuch es draußen oder mit WLAN noch einmal, oder gib die Postleitzahl ein.';
+      else t = 'Das Gerät liefert gerade keinen Standort. Gib die Postleitzahl ein.';
+      $('fInfo').textContent = t;
+    }, { timeout: 20000, maximumAge: 600000, enableHighAccuracy: false });
   });
 
   if (store('bw-tab') === 'find') showTab('find');
