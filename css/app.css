@@ -136,3 +136,54 @@ body.loaded .pick { background-image: var(--fiber); }
 html, body { overflow-x: clip; } .items { margin-left: 4px; margin-right: 4px; }
 
 .closedemo { justify-self: start; padding: 4px 0; color: var(--ink); font-weight: 700; }
+
+/* Reiter */
+.tabs { display: flex; gap: 8px; max-width: 628px; margin: 14px auto 0; padding: 0 max(22px, env(safe-area-inset-left, 0px)); }
+.tabs button { appearance: none; flex: 1; min-height: 46px; border: 2px dashed var(--line); border-radius: 10px; background: transparent; color: var(--muted); font: 700 .98rem var(--body); cursor: pointer; }
+.tabs button[aria-pressed="true"] { background: var(--honey); border: 2px dashed rgba(46,31,20,.5); outline: 3px solid var(--honey); outline-offset: -3px; color: var(--honey-ink); }
+body.tab-finder .wrap, body.tab-finder .bar { display: none !important; }
+body.tab-finder { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 2rem); }
+body.tab-finder .logo { font-size: 2.4rem; }
+body.tab-finder .sub { display: none; }
+
+/* Basare finden */
+.finder { max-width: 672px; margin: 0 auto; display: grid; gap: 14px; padding: 18px max(22px, env(safe-area-inset-right, 0px)) 0 max(22px, env(safe-area-inset-left, 0px)); }
+.finder[hidden] { display: none; }
+.finder > * { min-width: 0; }
+.fsearch { background: var(--paper); border-radius: 16px; padding: 14px 16px 6px; display: grid; gap: 10px; background-image: var(--grain); background-blend-mode: multiply; }
+.frow { display: grid; grid-template-columns: 1fr auto; gap: 8px; }
+.frow input { min-width: 0; font: inherit; font-size: 16px; color: var(--ink); background: var(--field); border: 0; border-radius: 10px; padding: 0 14px; min-height: 54px; }
+.frow .btn { min-height: 54px; }
+.frow2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.frow2 label { display: grid; gap: 3px; font-size: .78rem; color: var(--muted); }
+.frow2 select { font: inherit; font-size: 1rem; color: var(--ink); background: var(--field); border: 0; border-radius: 10px; padding: .6rem .6rem; min-height: 46px; }
+.fgeo { text-align: center; }
+.ffavs { display: flex; flex-wrap: wrap; gap: 8px; }
+.ffavs[hidden] { display: none; }
+.chip { display: inline-flex; align-items: center; border: 2px dashed var(--line); border-radius: 999px; background: transparent; color: var(--ink); font: 700 .9rem var(--body); }
+.chip.on { background: var(--honey); border-color: rgba(46,31,20,.45); color: var(--honey-ink); }
+button.chip { padding: 8px 14px; cursor: pointer; }
+.chipgo, .chipx { appearance: none; border: 0; background: none; color: inherit; font: inherit; cursor: pointer; }
+.chipgo { padding: 8px 4px 8px 14px; }
+.chipx { padding: 8px 12px 8px 6px; font-size: 1.15rem; line-height: 1; opacity: .7; }
+.finfo { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.finfo p { margin: 0; color: var(--muted); font-size: .95rem; flex: 1 1 14rem; }
+.finfo .linkbtn { color: var(--ink); font-weight: 700; padding: 4px 0; }
+.flist { display: grid; gap: 10px; }
+.fcard { display: grid; grid-template-columns: 4.6rem 1fr; gap: 14px; align-items: center; text-decoration: none; color: var(--ink); background: var(--paper); border-radius: 12px; padding: 12px 16px 12px 12px; background-image: var(--grain); background-blend-mode: multiply; border-left: 3px dashed var(--line); }
+.fcard:active { opacity: .85; }
+.fdate { display: grid; justify-items: center; line-height: 1; padding-right: 10px; border-right: 2px dashed var(--line); }
+.fday { font: 700 2.15rem/1 var(--hand); color: var(--price); white-space: nowrap; }
+.fmon { font: 700 .86rem var(--body); color: var(--muted); margin-top: 2px; text-align: center; }
+.fwd { font-size: .78rem; color: var(--muted); margin-top: 2px; }
+.fname { font-weight: 700; line-height: 1.25; overflow-wrap: anywhere; }
+.fmeta { color: var(--muted); font-size: .9rem; margin-top: 3px; }
+.ftags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.ftag { font: 700 .75rem var(--body); padding: 3px 10px; border-radius: 999px; background: var(--honey); color: var(--honey-ink); }
+.ftag.soft { background: transparent; color: var(--muted); border: 1.5px dashed var(--line); }
+.fmore { text-align: center; }
+.fstand { margin: 6px 0 0; font-size: .82rem; color: var(--muted); text-align: center; }
+.fsearch > *, .frow > *, .frow2 > * { min-width: 0; }
+.frow input, .frow2 select { width: 100%; }
+.fcard { grid-template-columns: 5.2rem 1fr; }
+.fday { font-size: 1.9rem; }

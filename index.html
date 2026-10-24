@@ -26,6 +26,10 @@
     <p class="sub">Basarlino und UnserBasar, in beide Richtungen.</p>
   </div>
 </header>
+<nav class="tabs" aria-label="Bereiche">
+  <button type="button" id="tabKonv" aria-pressed="true">Konvertieren</button>
+  <button type="button" id="tabFind" aria-pressed="false">Basare finden</button>
+</nav>
 <div class="wrap">
 
   <label class="pick" id="pick" for="file">
@@ -77,6 +81,31 @@
   <div style="text-align:center"><button class="linkbtn" type="button" id="demo">Beispiel ansehen</button></div>
 </div>
 
+
+<main class="finder" id="finder" hidden>
+  <form class="fsearch" id="fForm" action="#">
+    <label class="sr" for="fOrt">Postleitzahl oder Ort</label>
+    <div class="frow">
+      <input id="fOrt" type="text" inputmode="text" autocomplete="off" autocapitalize="words" enterkeyhint="search" placeholder="Postleitzahl oder Ort">
+      <button class="btn primary" type="submit">Suchen</button>
+    </div>
+    <div class="frow2">
+      <label>Umkreis
+        <select id="fRadius"><option value="10">10 km</option><option value="25" selected>25 km</option><option value="50">50 km</option><option value="100">100 km</option><option value="0">ganz Deutschland</option></select>
+      </label>
+      <label>Art
+        <select id="fArt"><option value="kids" selected>Kinder &amp; Baby</option><option value="all">Alle Arten</option></select>
+      </label>
+    </div>
+    <div class="fgeo"><button class="linkbtn" type="button" id="fGeo">Meinen Standort nutzen</button></div>
+  </form>
+  <div class="ffavs" id="fFavs" hidden></div>
+  <div class="finfo"><p id="fInfo" role="status" aria-live="polite"></p><button class="linkbtn" type="button" id="fSave" hidden aria-pressed="false">☆ Ort merken</button></div>
+  <div class="flist" id="fList"></div>
+  <div class="fmore"><button class="btn" type="button" id="fMore" hidden>Mehr anzeigen</button></div>
+  <p class="fstand" id="fStand"></p>
+</main>
+
 <div class="bar" id="bar" hidden>
   <div class="in">
     <button class="btn primary" type="button" id="save">Für UnserBasar sichern</button>
@@ -88,6 +117,7 @@
 <script src="vendor/pdf.min.js"></script>
 <script src="js/parser.js"></script>
 <script src="js/app.js"></script>
+<script src="js/finder.js"></script>
 <script>
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
   window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
